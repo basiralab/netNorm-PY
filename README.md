@@ -17,6 +17,7 @@ In this repository, we release netNorm *in Python* to run on multi-view networks
 This code was implemented in Python. You can find the Matlab version at: https://github.com/basiralab/netNorm
 
 **Install SNF Python library**
+
 To run netNorm, install SNF library: (https://github.com/rmarkello/snfpy)
 
 **Run netNorm**
