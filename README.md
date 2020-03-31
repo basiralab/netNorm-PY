@@ -1,5 +1,5 @@
 # netNorm-PY (Network Normalization for Integrating Multi-view Networks) in Python
-netNorm (network normalization) framwork for multi-view network integration (or fusion), recoded up in Python by Ahmed Nebli. Please contact mr.ahmednebli@gmail.com for inquiries. Thanks. 
+netNorm (network normalization) framework for multi-view network integration (or fusion), recoded up in Python by Ahmed Nebli. Please contact mr.ahmednebli@gmail.com for inquiries. Thanks. 
 
 This work is published in the journal of Medical Image Analysis, 2020.
 
