@@ -1,23 +1,18 @@
 """Main function of netNorm for the paper: Estimation of Connectional Brain Templates using Selective Multi
 View Network Normalization
-
     Details can be found in:
     (1) the original paper https://www.ncbi.nlm.nih.gov/pubmed/31622839
         Salma Dhifallah, and Islem Rekik.
     ---------------------------------------------------------------------
-
     This file contains the implementation of three key steps of our netNorm framework:
-
         netNorm(sourceGraph, number_of_subjects, number_of_regions)
                 Inputs:
                         sourceGraph: (n × m x t x t) matrix stacking the source graphs of all subjects
                                      n the total number of views
                                      m the number of subjects
                                      t number of regions
-
                 Output:
                         CBT:         (t x t) matrix representing the cortical brain template
-
     (2) Dependencies: please install the following libraries:
         - matplotlib
         - numpy
@@ -186,8 +181,7 @@ def netNorm(v, nbr_of_sub, nbr_of_regions):
     New_ten = new_tensor(Min_dis, Upp_trig)
     Re_ten = re_make_tensor(New_ten, nbr_of_regions)
     Cre_lis = create_list(Re_ten)
-    affinity_networks = snf.make_affinity(Cre_lis, metric='euclidean', K=20, mu=0.5)
-    fused_network = snf.snf((affinity_networks), K=20)
+    fused_network = snf.snf((Cre_lis), K=20)
     fused_network = minmax_sc(fused_network)
     np.fill_diagonal(fused_network, 0)
     fused_network = np.array(fused_network)
@@ -208,8 +202,3 @@ print(mn)
 plt.pcolor(A, vmin=mn, vmax=mx)
 plt.imshow(A)
 plt.show()
-
-
-
-
-
