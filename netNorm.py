@@ -23,25 +23,6 @@ View Network Normalization
     Please cite the above paper if you use this code.
     All rights reserved.
     """
-def scale_mtx(mt):
-    shape = mt.shape
-    min_max_scaler = preprocessing.MinMaxScaler()
-    temp = mt.flatten().reshape(-1, 1)
-    temp = min_max_scaler.fit_transform(temp)
-    return temp.reshape(shape[0], shape[1])
-
-def isSymmetric(mt):
-    shape = mt.shape
-    if shape[0] != shape[1]:
-        print("matrix isn't square")
-        exit(1)
-
-    for r in range(shape[0]):
-        for c in range(shape[1]):
-            if A[r][c] != A[c][r]:
-                return False
-
-    return True
 
 import numpy as np
 import snf
@@ -201,8 +182,7 @@ def netNorm(v, nbr_of_sub, nbr_of_regions):
     Re_ten = re_make_tensor(New_ten, nbr_of_regions)
     Cre_lis = create_list(Re_ten)
     fused_network = snf.snf((Cre_lis), K=20)
-    #fused_network = minmax_sc(fused_network) #the line that makes fused_network not symmetric!!
-    fused_network = scale_mtx(fused_network)
+    fused_network = minmax_sc(fused_network)
     np.fill_diagonal(fused_network, 0)
     fused_network = np.array(fused_network)
     return fused_network
@@ -213,14 +193,7 @@ nbr_of_views= int(input('Please select the number of views: '))
 
 v = np.random.rand(nbr_of_views, nbr_of_sub,nbr_of_regions, nbr_of_regions)
 A = netNorm(v, nbr_of_sub, nbr_of_regions)
-
-#checking if matrix A is symmetric
-isSym = isSymmetric(A)
-if isSym:
-    print("matrix is symmetric")
-else:
-    print("matrix is not symmetric!")
-
+print(A)
 
 mx = A.max()
 mn = A.min()
