@@ -62,16 +62,18 @@ def netNorm(v, nbr_of_sub, nbr_of_regions):
             for j in range(nbr_of_sub):
                 subj_j = ROI_i[j:j+1, :]
                 subj_j = np.reshape(subj_j, (1, nbr_of_views))
+                distance_euclidienne_sub_j_sub_k =0
+
                 for k in range(nbr_of_sub):
                     if k != j:
                         subj_k = ROI_i[k:k+1, :]
                         subj_k = np.reshape(subj_k, (1, nbr_of_views))
 
                         for l in range(nbr_of_views):
-                            if l ==0:
-                                distance_euclidienne_sub_j_sub_k = np.square(subj_k[:, l:l+1] - subj_j[:, l:l+1])
-                            else:
-                                distance_euclidienne_sub_j_sub_k = distance_euclidienne_sub_j_sub_k + np.square(subj_k[:, l:l+1] - subj_j[:, l:l+1])
+
+                            distance_euclidienne_sub_j_sub_k = distance_euclidienne_sub_j_sub_k + np.square(subj_k[:, l:l+1] - subj_j[:, l:l+1])
+
+
 
                             theta +=1
                 if j ==0:
@@ -84,24 +86,22 @@ def netNorm(v, nbr_of_sub, nbr_of_regions):
             else:
                 distance_vector_final = np.concatenate((distance_vector_final, distance_vector), axis=1)
 
-        print(theta)
+        # print(theta)
         return distance_vector_final
-
 
     def minimum_distances(distance_vector_final):
         x = distance_vector_final
 
         for i in range(nbr_of_feat):
-            for j in range(nbr_of_sub):
-                minimum_sub = x[j:j+1, i:i+1]
-                minimum_sub = float(minimum_sub)
-                for k in range(nbr_of_sub):
-                    if k != j:
-                        local_sub = x[k:k+1, i:i+1]
-                        local_sub = float(local_sub)
-                        if local_sub < minimum_sub:
-                            general_minimum = k
-                            general_minimum = np.array(general_minimum)
+            minimum_sub = x[0, i: i + 1]
+            minimum_sub = float(minimum_sub)
+            for k in range(1, nbr_of_sub):
+                local_sub = x[k: k + 1, i: i + 1]
+                local_sub = float(local_sub)
+                if local_sub < minimum_sub:
+                    general_minimum = k
+                    general_minimum = np.array(general_minimum)
+                    minimum_sub = local_sub
             if i == 0:
                 final_general_minimum = np.array(general_minimum)
             else:
@@ -193,7 +193,7 @@ nbr_of_views= int(input('Please select the number of views: '))
 
 v = np.random.rand(nbr_of_views, nbr_of_sub,nbr_of_regions, nbr_of_regions)
 A = netNorm(v, nbr_of_sub, nbr_of_regions)
-print(A)
+# print(A)
 
 mx = A.max()
 mn = A.min()
