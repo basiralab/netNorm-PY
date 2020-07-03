@@ -91,7 +91,7 @@ def netNorm(v, nbr_of_sub, nbr_of_regions):
 
     def minimum_distances(distance_vector_final):
         x = distance_vector_final
-
+        general_minimum = 0
         for i in range(nbr_of_feat):
             minimum_sub = x[0, i: i + 1]
             minimum_sub = float(minimum_sub)
